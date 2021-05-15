@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Home</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/normalize.css">
@@ -8,110 +9,110 @@
     <link rel="stylesheet" href="css/stylesheet.css">
     <link rel="stylesheet" href="css/responsive.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
+</head>
+
+<body>
     <header>
-      <time id="js-clock"></time>
-      <span id="js-date" class="date"></span>
+        <time id="js-clock"></time>
+        <span id="js-date" class="date"></span>
     </header>
     <div class="wrapper">
-      <section class="main">
-        
-        <section class="커뮤니티">
-          <h3>커뮤니티</h3>
-          <ul>
-            <li><a href="https://www.github.com">github</a></li>
-            <li><a href="https://discord.com/channels/@me">discord</a></li>
-            <li><a href="http://naver.com">naver</a></li>
-          </ul>
+        <section class="main">
+            <section class="good" style="margin-left: 1000px;">
+                <h3>good</h3>
+                <ul>
+                    <li><a href="https://www.github.com">github</a></li>
+                    <li><a href="http://naver.com">naver</a></li>
+                </ul>
+            </section>
+            <section class="b" style="margin-left: 1000px;">
+                <h3>번역</h3>
+                <ul>
+                    <li><a href="https://translate.google.co.kr/?hl=ko">golor 번역</a></li>
+                    <li><a href="https://papago.naver.com/">파파고 번역</a></li>
+                    <li><a href="https://translate.kakao.com/">카카오 번역</a></li>
+                </ul>
+            </section>
+            <section class="search">
+                <form action="https://www.google.com/search" method="get">
+                    <input type="search" autocomplete="off" placeholder="검색" name="q" class="searchbox">
+                </form>
+            </section>
         </section>
-        <section class="유틸">
-          <h3>번역</h3>
-          <ul>
-            <li><a href="https://translate.google.co.kr/?hl=ko">golor 번역</a></li>
-            <li><a href="https://papago.naver.com/">파파고 번역</a></li>
-            <li><a href="https://translate.kakao.com/">카카오 번역</a></li>
-          </ul>
-        </section>
-        <section class="search">
-          <form action="https://www.google.com/" method="get">
-            <input type="search" autocomplete="off" placeholder="검색" name="q" class="searchbox">
-          </form>
-        </section>
-      </section>
-      <footer>
-      </footer>
+        <footer>
+        </footer>
     </div>
     <script>
-      function ordinal_suffix_of(i) {
-        var j = i % 10,
-            k = i % 100;
-        if (j == 1 && k != 11) {
+        function ordinal_suffix_of(i) {
+            var j = i % 10,
+                k = i % 100;
+            if (j == 1 && k != 11) {
+                return i + "일";
+            }
+            if (j == 2 && k != 12) {
+                return i + "nd";
+            }
+            if (j == 3 && k != 13) {
+                return i + "rd";
+            }
             return i + "일";
         }
-        if (j == 2 && k != 12) {
-            return i + "nd";
-        }
-        if (j == 3 && k != 13) {
-            return i + "rd";
-        }
-        return i + "일";
-      }
 
-      class Clock {
-        constructor() {
-          this._clockEl = document.getElementById('js-clock');
-          this._dateEl = document.getElementById('js-date');
-          this._setTime = this._setTime.bind(this);
-          this._start();
+        class Clock {
+            constructor() {
+                this._clockEl = document.getElementById('js-clock');
+                this._dateEl = document.getElementById('js-date');
+                this._setTime = this._setTime.bind(this);
+                this._start();
+            }
+            _pad(num) {
+                return (`0${num.toString()}`).slice(-2);
+            }
+            _setTime() {
+                const date = new Date();
+                const hours = this._pad(date.getHours());
+                const minutes = this._pad(date.getMinutes());
+                this._clockEl.innerHTML = `${hours-12} : ${minutes}`;
+
+                const year = date.getFullYear();
+                const month = this._pad(date.getMonth());
+                const day = date.getDate();
+
+                var weekdays = new Array(7);
+                weekdays[0] = "주일";
+                weekdays[1] = "월요일";
+                weekdays[2] = "화요일";
+                weekdays[3] = "수요일";
+                weekdays[4] = "목요일";
+                weekdays[5] = "금요일";
+                weekdays[6] = "토요일";
+
+                var months = new Array(12);
+                months['00'] = "1월";
+                months['01'] = "2월";
+                months['02'] = "3월";
+                months['03'] = "4월";
+                months['04'] = "5월";
+                months['05'] = "6월";
+                months['06'] = "7월";
+                months['07'] = "8월";
+                months['08'] = "9월";
+                months['09'] = "10월";
+                months['10'] = "11월";
+                months['11'] = "12월";
+
+                var weekday = weekdays[date.getDay()];
+                var fullMonth = months[month];
+
+                this._dateEl.innerHTML = fullMonth + ' ' + ordinal_suffix_of(day) + ' ' + weekday;
+            }
+            _start() {
+                this._setTime();
+                setInterval(this._setTime, 3000);
+            }
         }
-        _pad(num) {
-          return (`0${num.toString()}`).slice(-2);
-        }
-        _setTime() {
-          const date = new Date();
-          const hours = this._pad(date.getHours());
-          const minutes = this._pad(date.getMinutes());
-          this._clockEl.innerHTML = `${hours-12} : ${minutes}`;
-
-          const year = date.getFullYear();
-          const month = this._pad(date.getMonth());
-          const day = date.getDate();
-
-          var weekdays = new Array(7);
-          weekdays[0] = "주일";
-          weekdays[1] = "월요일";
-          weekdays[2] = "화요일";
-          weekdays[3] = "수요일";
-          weekdays[4] = "목요일";
-          weekdays[5] = "금요일";
-          weekdays[6] = "토요일";
-
-          var months = new Array(12);
-          months['00'] = "1월";
-          months['01'] = "2월";
-          months['02'] = "3월";
-          months['03'] = "4월";
-          months['04'] = "5월";
-          months['05'] = "6월";
-          months['06'] = "7월";
-          months['07'] = "8월";
-          months['08'] = "9월";
-          months['09'] = "10월";
-          months['10'] = "11월";
-          months['11'] = "12월";
-
-          var weekday   = weekdays[date.getDay()];
-          var fullMonth = months[month];
-
-          this._dateEl.innerHTML = fullMonth + ' ' + ordinal_suffix_of(day) + ' ' + weekday ;
-        }
-        _start() {
-          this._setTime();
-          setInterval(this._setTime, 3000);
-        }
-      }
-      const clock = new Clock();
+        const clock = new Clock();
     </script>
-  </body>
+</body>
+
 </html>
